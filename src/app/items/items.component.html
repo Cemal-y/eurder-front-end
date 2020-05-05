@@ -1,0 +1,99 @@
+<h2>Items</h2>
+<input type="text" placeholder="filter by name"  [(ngModel)]="filterText">
+<div>
+<!--  <label>Hero name:-->
+<!--    <input #heroName />-->
+<!--  </label>-->
+<!--  &lt;!&ndash; (click) passes input value to add() and then clears the input &ndash;&gt;-->
+<!--  <button (click)="add(heroName.value); heroName.value=''">-->
+<!--    add-->
+<!--  </button>-->
+</div>
+<div class="items" class="card-header">
+<!--  <li *ngFor="let item of items">-->
+<!--&lt;!&ndash;    <p>{{item.name}}</p>&ndash;&gt;-->
+<!--    <a routerLink="/detail/{{item.id}}">-->
+<!--      <span class="badge">{{item.id}}</span> {{item.name}}-->
+<!--    </a>-->
+<!--    <div class="grid grid-pad">-->
+<!--      <a *ngFor="let item of items" class="col-1-4" routerLink="/detail/{{item.id}}">-->
+<!--        <div class="module hero">-->
+<!--          <h4>{{item.name}}</h4>-->
+<!--        </div>-->
+<!--      </a>-->
+<!--    </div>-->
+  <div class="wrapper">
+  <div class="card"  *ngFor="let item of filteredItems" class="col-1-4" routerLink="/detail/{{item.id}}">
+    <h5 class="card-title">{{item.name}}</h5>
+    <img src="https://picsum.photos/200/100" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p style="text-align:left">Price: {{item.price | currency: "EUR"}}
+        <span style="float:right">
+        {{item.stockUrgency}}
+    </span></p>
+      <p></p>
+    </div>
+  </div>
+  </div>
+
+<!--CREATE ITEM-->
+
+  <div class = "card">
+  <h2 class="card-header">Create Item</h2>
+
+    <form #form = "ngForm" class="needs-validation">
+
+      <div class="form-group">
+        <label for="inputAddress">Name</label>
+        <input type="text" class="form-control" id="inputAddress" name="name" [(ngModel)]="item.name" required #name="ngModel">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="alert alert-danger">
+          <div *ngIf="name.errors.required">
+            Name is required.
+          </div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" [maxlength] = "maxChars"
+                  [(ngModel)]="item.description" #description></textarea>
+        <p align="right">{{item.description?(maxChars-item.description.length):maxChars}} / {{maxChars}}</p>
+        <div *ngIf="description.textLength === 255"
+             class="alert alert-danger">
+          Description can be maximum 255 characters long.
+        </div>
+      </div>
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="price">Price</label>
+<!--          <i class="fa fa-euro fa-2x"></i>-->
+          <input type="number" class="form-control" id="price" name="price" [(ngModel)]="item.price" #price ="ngModel">
+          <div *ngIf="price.value < 0 && (price.dirty || price.touched)"
+               class="alert alert-danger">
+              Price cannot be negative
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="amountOfStock">Amount of Stock</label>
+          <input type="number" class="form-control" id="amountOfStock" name="amountOfStock" [(ngModel)]="item.amountOfStock" #stockAmount ="ngModel">
+          <div *ngIf="(stockAmount.value < 0) && (stockAmount.dirty || stockAmount.touched)"
+               class="alert alert-danger">
+              Stock amount cannot be negative
+        </div>
+      </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 60%; margin-right: 10%"
+        (click)="add(item) "routerLink="/home">
+        Create
+      </button>
+      <button type="submit" class="btn btn-dark" style="width: 15%" routerLink="/items">Cancel</button>
+    </form>
+  </div>
+<!--    <button class="delete" title="delete hero"-->
+<!--            (click)="delete(hero)">x</button>-->
+<!--  </li>-->
+</div>
+
+
