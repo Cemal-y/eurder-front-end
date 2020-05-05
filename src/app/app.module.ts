@@ -7,12 +7,16 @@ import {AppRoutingModule} from './app-routing.module';
 import { ItemsComponent } from './items/items.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import { ItemDetailsComponent } from './item-details/item-details.component';
+import { CreateItemComponent } from './create-item/create-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ItemsComponent
+    ItemsComponent,
+    ItemDetailsComponent,
+    CreateItemComponent
   ],
     imports: [
         BrowserModule,

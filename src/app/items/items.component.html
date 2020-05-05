@@ -1,48 +1,17 @@
-<h2>Items</h2>
-<input type="text" placeholder="filter by name"  [(ngModel)]="filterText">
-<div>
-<!--  <label>Hero name:-->
-<!--    <input #heroName />-->
-<!--  </label>-->
-<!--  &lt;!&ndash; (click) passes input value to add() and then clears the input &ndash;&gt;-->
-<!--  <button (click)="add(heroName.value); heroName.value=''">-->
-<!--    add-->
-<!--  </button>-->
+<div class="card-header">
+  <h2>Items</h2>
+  <input type="text" placeholder="filter by name"  [(ngModel)]="filterText">
+<button class="btn btn-danger" style="width: 15%; margin-right: 10%; float:right"
+        (click)="toggleCreate()">
+  Add Item
+</button>
 </div>
-<div class="items" class="card-header">
-<!--  <li *ngFor="let item of items">-->
-<!--&lt;!&ndash;    <p>{{item.name}}</p>&ndash;&gt;-->
-<!--    <a routerLink="/detail/{{item.id}}">-->
-<!--      <span class="badge">{{item.id}}</span> {{item.name}}-->
-<!--    </a>-->
-<!--    <div class="grid grid-pad">-->
-<!--      <a *ngFor="let item of items" class="col-1-4" routerLink="/detail/{{item.id}}">-->
-<!--        <div class="module hero">-->
-<!--          <h4>{{item.name}}</h4>-->
-<!--        </div>-->
-<!--      </a>-->
-<!--    </div>-->
-  <div class="wrapper">
-  <div class="card"  *ngFor="let item of filteredItems" class="col-1-4" routerLink="/detail/{{item.id}}">
-    <h5 class="card-title">{{item.name}}</h5>
-    <img src="https://picsum.photos/200/100" class="card-img-top" alt="...">
-    <div class="card-body">
-      <p style="text-align:left">Price: {{item.price | currency: "EUR"}}
-        <span style="float:right">
-        {{item.stockUrgency}}
-    </span></p>
-      <p></p>
-    </div>
-  </div>
-  </div>
 
 <!--CREATE ITEM-->
-
-  <div class = "card">
+  <div class = "card" *ngIf="createItem">
   <h2 class="card-header">Create Item</h2>
 
-    <form #form = "ngForm" class="needs-validation">
-
+    <form #form = "ngForm" class="needs-validation" class="card-body">
       <div class="form-group">
         <label for="inputAddress">Name</label>
         <input type="text" class="form-control" id="inputAddress" name="name" [(ngModel)]="item.name" required #name="ngModel">
@@ -88,12 +57,27 @@
         (click)="add(item) "routerLink="/home">
         Create
       </button>
-      <button type="submit" class="btn btn-dark" style="width: 15%" routerLink="/items">Cancel</button>
+      <button type="submit" class="btn btn-dark" style="width: 15%" (click)="toggleCreate()">Cancel</button>
     </form>
   </div>
-<!--    <button class="delete" title="delete hero"-->
-<!--            (click)="delete(hero)">x</button>-->
-<!--  </li>-->
+
+<!--SHOW ITEMS-->
+
+<div class="items" class="card-header">
+  <div class="wrapper">
+    <div class="card"  *ngFor="let item of filteredItems" class="col-1-4">
+      <h5 class="card-title">{{item.name}}</h5>
+      <img src="https://picsum.photos/200/100" class="card-img-top" [routerLink]="['/items', item.id]">
+      <div class="card-body">
+        <p style="text-align:left">Price: {{item.price | currency: "EUR"}}
+          <span style="float:right">
+        {{item.stockUrgency}}
+    </span></p>
+        <p></p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 

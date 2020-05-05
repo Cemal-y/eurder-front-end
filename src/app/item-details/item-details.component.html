@@ -1,0 +1,55 @@
+<div class="card shadow " *ngIf="item">
+  <div class="card-header">
+    <h4>Item: <span style="color: gray">{{item.id}}</span></h4>
+  </div>
+  <div class="card-body">
+    <div class="form-group">
+      <div class="form-row col-md-2">
+    <label>name:
+      <input [readOnly]="!updateMode" [(ngModel)]="item.name" #name="ngModel" required/>
+    </label>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+             class="alert alert-danger">
+          <div *ngIf="name.errors.required">
+            Name is required.
+          </div>
+        </div>
+        </div>
+      <div class="form-row col-md-2">
+    <label>description:
+      <textarea [readOnly]="!updateMode" [(ngModel)]="item.description" #description maxlength="255">
+        </textarea>
+    </label>
+        <p align="right">{{item.description?(255-item.description.length):255}} / 255</p>
+        <div *ngIf="description.textLength === 255"
+             class="alert alert-danger">
+          Description can be maximum 255 characters long.
+        </div>
+      </div>
+        <div class="form-row col-md-2">
+    <label>price:
+      <input [readOnly]="!updateMode" [(ngModel)]="item.price" #price ="ngModel"/>
+    </label>
+          <div *ngIf="price.value < 0 && (price.dirty || price.touched)"
+               class="alert alert-danger">
+            Price cannot be negative
+          </div>
+        </div>
+          <div class="form-row col-md-2">
+    <label>stock amount:
+      <input [readOnly]="!updateMode" [(ngModel)]="item.amountOfStock" #stockAmount ="ngModel"/>
+    </label>
+            <div *ngIf="(stockAmount.value < 0) && (stockAmount.dirty || stockAmount.touched)"
+                 class="alert alert-danger">
+              Stock amount cannot be negative
+            </div>
+    </div>
+  </div>
+  <div class="form-row" style="float: right">
+  <button *ngIf="!updateMode" type="submit" class="btn btn-primary" (click)="toggleUpdateMode()">Edit</button>
+    <button *ngIf="updateMode" type="submit" class="btn btn-primary" (click)="update()">Update</button>
+    <button *ngIf="!updateMode" type="button" class="btn btn-dark" (click)="goBack()">Back</button>
+    <button *ngIf="updateMode" type="button" class="btn btn-dark" (click)="refreshPage()">Cancel</button>
+  </div>
+</div>
+</div>

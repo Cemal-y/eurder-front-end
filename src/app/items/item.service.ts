@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {Item} from './item';
-import {catchError, tap} from 'rxjs/operators';
+import {IItem} from './IItem';
+import {catchError, map, tap} from 'rxjs/operators';
 import {MessageService} from '../message.service';
 
 @Injectable({
@@ -15,30 +15,37 @@ export class ItemService {
   };
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
-  getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.itemsUrl).
+  getItems(): Observable<IItem[]> {
+    return this.http.get<IItem[]>(this.itemsUrl).
       pipe(tap(_ => this.log('fetched items')),
-      catchError(this.handleError<Item[]>('getItems', [])));
+      catchError(this.handleError<IItem[]>('getItems', [])));
   }
-  addItem(item: Item): Observable<Item> {
-    return this.http.post<Item>(this.itemsUrl, item, this.httpOptions).pipe(
-      tap((newItem: Item) => this.log(`added Item id=${newItem.id}`)),
-      catchError(this.handleError<Item>('addItem'))
+  addItem(item: IItem): Observable<IItem> {
+    return this.http.post<IItem>(this.itemsUrl, item, this.httpOptions).pipe(
+      tap((newItem: IItem) => this.log(`added Item id=${newItem.id}`)),
+      catchError(this.handleError<IItem>('addItem'))
     );
   }
-  updateItem(item: Item): Observable<any> {
-    return this.http.put(this.itemsUrl, item, this.httpOptions).pipe(
+  getItemById(id: string): Observable<IItem>{
+    return this.getItems().pipe(
+      map(items => items.find(item => item.id === id))
+    );
+  }
+  updateItem(item: IItem): Observable<IItem> {
+    let updateUrl = this.itemsUrl;
+    updateUrl += `/${item.id}`;
+    return this.http.put(updateUrl, item, this.httpOptions).pipe(
       tap(_ => this.log(`updated item id=${item.id}`)),
       catchError(this.handleError<any>('updateItem'))
     );
   }
-  deleteItem(item: Item | number): Observable<Item> {
+  deleteItem(item: IItem | number): Observable<IItem> {
     const id = typeof item === 'number' ? item : item.id;
     const url = `${this.itemsUrl}/${id}`;
 
-    return this.http.delete<Item>(url, this.httpOptions).pipe(
+    return this.http.delete<IItem>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted item id=${id}`)),
-      catchError(this.handleError<Item>('deleteItem'))
+      catchError(this.handleError<IItem>('deleteItem'))
     );
   }
   private log(message: string) {

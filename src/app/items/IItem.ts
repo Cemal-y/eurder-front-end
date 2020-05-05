@@ -4,8 +4,8 @@ enum StockUrgency {
   LOW = 'LOW'
 }
 
-export interface Item {
-  id?: number;
+export interface IItem {
+  id?: string;
   name?: string;
   price?: number;
   imageUrl?: string;

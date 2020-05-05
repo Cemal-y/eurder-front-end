@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Item} from './item';
+import {IItem} from './IItem';
 import {ItemService} from './item.service';
 
 @Component({
@@ -8,8 +8,9 @@ import {ItemService} from './item.service';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-  items: Item[] = [];
-  item: Item =  {
+  items: IItem[] = [];
+  createItem = false;
+  item: IItem =  {
     id: null,
     name: null,
     price: null,
@@ -19,7 +20,7 @@ export class ItemsComponent implements OnInit {
     amountOfStock: null
   };
   // tslint:disable-next-line:variable-name
-  private _filteredItems: Item[] = [];
+  private _filteredItems: IItem[] = [];
   filterText = '';
   private errorMessage = '';
   maxChars =  255;
@@ -36,22 +37,21 @@ export class ItemsComponent implements OnInit {
       });
   }
 
-  get filteredItems(): Item[] {
+  get filteredItems(): IItem[] {
     this.filter();
     return this._filteredItems;
   }
 
-  set filteredItems(value: Item[]) {
+  set filteredItems(value: IItem[]) {
     this._filteredItems = value;
   }
 
-
-  filter(): void {
+    filter(): void {
     this.filteredItems = this.items.filter(item => item.name.toLowerCase()
       .startsWith(this.filterText.toLowerCase()));
   }
 
-  add(itemToAdd: Item): void {
+  add(itemToAdd: IItem): void {
     // name = name.trim();
     // if (!name) { return; }
     this.itemService.addItem(itemToAdd)
@@ -59,8 +59,11 @@ export class ItemsComponent implements OnInit {
         this.items.push(item);
       });
   }
+  toggleCreate(): void{
+    this.createItem = !this.createItem;
+  }
 
-  delete(item: Item): void {
+  delete(item: IItem): void {
     this.items = this.items.filter(h => h !== item);
     this.itemService.deleteItem(item).subscribe();
   }
