@@ -30,6 +30,8 @@ export class ItemService {
     return this.getItems().pipe(
       map(items => items.find(item => item.id === id))
     );
+    // const url = this.itemsUrl.concat('/' + id);
+    // return this.http.get<IItem>(url);
   }
   updateItem(item: IItem): Observable<IItem> {
     let updateUrl = this.itemsUrl;

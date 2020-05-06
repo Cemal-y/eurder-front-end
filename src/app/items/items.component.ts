@@ -27,11 +27,14 @@ export class ItemsComponent implements OnInit {
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.itemService.getItems()
-      .subscribe({
+    this.getItems();
+  }
+
+  private getItems() {
+    this.itemService.getItems().subscribe({
         next: items => {
           this.items = items;
-          this._filteredItems = this.items;
+          this._filteredItems = items;
         },
         error: err => this.errorMessage = err
       });
@@ -46,7 +49,7 @@ export class ItemsComponent implements OnInit {
     this._filteredItems = value;
   }
 
-    filter(): void {
+  filter(): void {
     this.filteredItems = this.items.filter(item => item.name.toLowerCase()
       .startsWith(this.filterText.toLowerCase()));
   }
@@ -58,6 +61,7 @@ export class ItemsComponent implements OnInit {
       .subscribe(item => {
         this.items.push(item);
       });
+    console.log(itemToAdd);
   }
   toggleCreate(): void{
     this.createItem = !this.createItem;

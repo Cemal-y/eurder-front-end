@@ -4,6 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {ItemsComponent} from './items/items.component';
 import {ItemDetailsComponent} from './item-details/item-details.component';
+import {CustomersComponent} from './customers/customers.component';
+import {CustomerDetailsComponent} from './customer-details/customer-details.component';
+import {CreateCustomerComponent} from './create-customer/create-customer.component';
 
 
 const routes: Routes = [
@@ -12,6 +15,9 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'items', component: ItemsComponent},
   {path: 'items/:id', component: ItemDetailsComponent},
+  {path: 'customers', component: CustomersComponent},
+  {path: 'customers/create', component: CreateCustomerComponent},
+  {path: 'customers/:id', component: CustomerDetailsComponent},
 ];
 
 @NgModule({

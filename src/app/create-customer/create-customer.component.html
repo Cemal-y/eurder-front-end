@@ -1,0 +1,104 @@
+<div class="card">
+  <h2 class="card-header">Create Customer</h2>
+  <form #form="ngForm" class="needs-validation" class="card-body" (ngSubmit)="addCustomer(form)">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="fistName">Firstname</label>
+        <input type="text" class="form-control" id="fistName" name="firstname" [(ngModel)]="customer.firstname"
+               required #firstname="ngModel" pattern="[a-zA-Z]+">
+        <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert alert-danger">
+          <div *ngIf="firstname.errors.required">Firstname is required.</div>
+          <div *ngIf="firstname.errors.pattern">Firstname shouldn't contain numbers</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="lastName">Lastname</label>
+        <input type="text" class="form-control" id="lastName" name="lastname"
+               [(ngModel)]="customer.lastname" required #lastname="ngModel" pattern="[a-zA-Z]+">
+        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
+          <div *ngIf="lastname.errors.required">Lastname is required.</div>
+          <div *ngIf="lastname.errors.pattern">Lastname shouldn't contain numbers</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="complete">Email</label>
+      <input type="email" class="form-control" id="complete" name="complete" [(ngModel)]="customer.email.complete"
+             #complete="ngModel" required email pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <div *ngIf="complete.invalid && (complete.dirty || complete.touched)" class="alert alert-danger">
+        <div *ngIf="complete.errors.required">Email address is required.</div>
+        <div *ngIf="complete.errors.pattern">This is not a valid Email!!!</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-1">
+        <label for="countryCallingCode">Country Code</label>
+        <input type="number" class="form-control" id="countryCallingCode" name="countryCallingCode"
+               [(ngModel)]="customer.phoneNumber.countryCallingCode" required #countryCallingCode="ngModel">
+        <div *ngIf="countryCallingCode.invalid && (countryCallingCode.dirty || countryCallingCode.touched)"
+             class="alert alert-danger">
+          <div *ngIf="countryCallingCode.errors.required">Required.</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="number">Phone number</label>
+        <input type="number" class="form-control" id="number" name="number" [(ngModel)]="customer.phoneNumber.number"
+               required #number="ngModel">
+        <div *ngIf="number.invalid && (number.dirty || number.touched)" class="alert alert-danger">
+          <div *ngIf="number.errors.required">Phone number is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="streetName">Street</label>
+        <input type="text" class="form-control" id="streetName" name="streetName"
+               [(ngModel)]="customer.address.streetName" required #streetName="ngModel">
+        <div *ngIf="streetName.invalid && (streetName.dirty || streetName.touched)" class="alert alert-danger">
+          <div *ngIf="streetName.errors.required">Street is required.</div>
+        </div>
+      </div>
+      <div class="form-group col-md-1">
+        <label for="houseNumber">House number</label>
+        <input type="number" class="form-control" id="houseNumber" name="houseNumber"
+               [(ngModel)]="customer.address.houseNumber" required #houseNumber="ngModel">
+        <div *ngIf="houseNumber.invalid && (houseNumber.dirty || houseNumber.touched)" class="alert alert-danger">
+          Required.
+        </div>
+        <div *ngIf="(houseNumber.value < 0) && (houseNumber.dirty || houseNumber.touched)" class="alert alert-danger">
+          Cannot be negative.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="postalCode">Postal code</label>
+        <input type="number" class="form-control" id="postalCode" name="postalCode"
+               [(ngModel)]="customer.address.postalCode" required #postalCode="ngModel" pattern="[0-9]{4,5}">
+        <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" class="alert alert-danger">
+          <div *ngIf="postalCode.errors.required">Postal code is required.</div>
+          <div *ngIf="postalCode.errors.pattern">Postal code is not valid</div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="country">Country</label>
+        <!--        <input type="text" class="form-control" id="country" name="country" >-->
+        <select id="country" class="form-control" name="country" [(ngModel)]="customer.address.country" required
+                #country="ngModel">
+          <!--          <option selected>Choose...</option>-->
+          <option>Belgium</option>
+          <option>France</option>
+          <option>Germany</option>
+        </select>
+        <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
+          <div *ngIf="country.errors.required">Country is required.</div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width: 60%; margin-right: 10%" (click)="toDetails()"> Create</button>
+    <div *ngIf="!form.valid && form.submitted" class="alert alert-danger">
+      Please correct errors before submitting the form
+    </div>
+    <button type="button" class="btn btn-dark" style="width: 15%" [routerLink]="['/customers']">Cancel</button>
+  </form>
+</div>

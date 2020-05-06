@@ -1,10 +1,12 @@
 <div class="card-header">
   <h2>Items</h2>
-  <input type="text" placeholder="filter by name"  [(ngModel)]="filterText">
-<button class="btn btn-danger" style="width: 15%; margin-right: 10%; float:right"
+  <div class=" form-check-inline">
+  <input class="input-group-text" placeholder="filter by name"  [(ngModel)]="filterText">
+  <button class="btn btn-danger"
         (click)="toggleCreate()">
   Add Item
 </button>
+  </div>
 </div>
 
 <!--CREATE ITEM-->
@@ -27,8 +29,8 @@
         <label for="description">Description</label>
         <textarea class="form-control" id="description" name="description" [maxlength] = "maxChars"
                   [(ngModel)]="item.description" #description></textarea>
-        <p align="right">{{item.description?(maxChars-item.description.length):maxChars}} / {{maxChars}}</p>
-        <div *ngIf="description.textLength === 255"
+        <p align="right">{{item.description ? (maxChars-item.description.length) : maxChars}} / {{maxChars}}</p>
+        <div *ngIf="description.textLength === maxChars"
              class="alert alert-danger">
           Description can be maximum 255 characters long.
         </div>
