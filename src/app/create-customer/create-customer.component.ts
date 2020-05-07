@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {CustomerService} from '../customers/customer.service';
 import {NgForm} from '@angular/forms';
 import {IAddress, ICustomer, IEmail, IPhoneNumber} from '../customers/ICustomer';
@@ -42,7 +42,7 @@ export class CreateCustomerComponent implements OnInit {
 
   addCustomer(form: NgForm): void{
     if (form.valid) {
-      this.customerService.addCustomer(this.customer).subscribe();
+      this.customerService.addCustomer(this.customer).subscribe(customer => this.customer = customer);
       this.refreshPage();
     }
   }

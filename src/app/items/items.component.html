@@ -56,7 +56,7 @@
       </div>
       </div>
       <button type="submit" class="btn btn-primary" style="width: 60%; margin-right: 10%"
-        (click)="add(item) "routerLink="/home">
+        (click)="add(item) "routerLink="/items">
         Create
       </button>
       <button type="submit" class="btn btn-dark" style="width: 15%" (click)="toggleCreate()">Cancel</button>
@@ -67,16 +67,16 @@
 
 <div class="items" class="card-header">
   <div class="wrapper">
-    <div class="card"  *ngFor="let item of filteredItems" class="col-1-4">
+    <div class="card" style="width: 25rem;"  *ngFor="let item of filteredItems" class="col-1-4">
       <h5 class="card-title">{{item.name}}</h5>
-      <img src="https://picsum.photos/200/100" class="card-img-top" [routerLink]="['/items', item.id]">
-      <div class="card-body">
+      <img class="card-img-top" src="../assets/iphoneSe.jpg" style="width: 80%;" class="card-img-top" [routerLink]="['/items', item.id]">
+<!--      <div class="card-body">-->
         <p style="text-align:left">Price: {{item.price | currency: "EUR"}}
-          <span style="float:right">
+          <span style="margin-left: 32% ">
         {{item.stockUrgency}}
-    </span></p>
+        </span></p>
         <p></p>
-      </div>
+<!--      </div>-->
     </div>
   </div>
 

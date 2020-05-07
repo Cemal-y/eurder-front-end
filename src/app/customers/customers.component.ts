@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IAddress, ICustomer, IEmail, IPhoneNumber} from './ICustomer';
 import {CustomerService} from './customer.service';
 import {NgForm} from '@angular/forms';
@@ -10,6 +10,7 @@ import {CreateCustomerComponent} from '../create-customer/create-customer.compon
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
+  @Output() customerEmitter = new EventEmitter<ICustomer>();
   customers: ICustomer[] = [];
   // tslint:disable-next-line:variable-name
   filteredCustomers: ICustomer[] = [];
@@ -36,6 +37,9 @@ export class CustomersComponent implements OnInit {
   create = false;
   constructor(private customerService: CustomerService, private createCustomerComponent: CreateCustomerComponent) { }
 
+  sendCustomer(){
+    this.customerEmitter.emit(this.customer);
+  }
   ngOnInit(): void {
     this.getCustomers();
   }

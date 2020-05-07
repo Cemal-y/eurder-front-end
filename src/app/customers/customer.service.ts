@@ -29,4 +29,9 @@ export class CustomerService {
     // const detailsUrl = this.url.concat(id);
     // return this.http.get<ICustomer>(detailsUrl);
   }
+
+  updateCustomer(customer: ICustomer): Observable<ICustomer> {
+    const updateUrl = this.url.concat(customer.id);
+    return this.http.put<ICustomer>(updateUrl, customer, this.httpOptions);
+  }
 }
