@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CustomerService {
-  url = 'http://localhost:9000/customers/';
+  url = 'https://eurder-backend.herokuapp.com/customers/';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

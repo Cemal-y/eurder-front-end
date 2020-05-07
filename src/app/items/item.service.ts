@@ -9,7 +9,7 @@ import {MessageService} from '../message.service';
   providedIn: 'root'
 })
 export class ItemService {
-  private itemsUrl = 'http://localhost:9000/items';  // URL to web api
+  private itemsUrl = 'https://eurder-backend.herokuapp.com/items';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
